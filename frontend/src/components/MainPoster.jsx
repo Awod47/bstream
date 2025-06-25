@@ -10,7 +10,7 @@ const MainPoster = () => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMDc5MTFkNDQyMzliOThjMWVlODlmZDQ4NGFjODVhZiIsIm5iZiI6MTc0OTg1MjExNi40Nywic3ViIjoiNjg0YzlmZDRlYmY2ZTY2Y2E0YjBkYzBkIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.qryDNHrm0Pp3Yhb13aHYZ4lI7M7VMK0F2RTA4Vc2DNs'
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
     }
   };
 
