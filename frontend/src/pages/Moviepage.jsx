@@ -16,45 +16,40 @@ const Moviepage = () => {
             accept: 'application/json',
             Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
         }
-        };
+    };
 
-        useEffect(()=>{
-            fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
-            .then(res => res.json())
-            .then(res => {
-                if(res){
-                    console.log(res)
-                    setMovie(res)
-                }
-            })
-            .catch(err => console.error(err));
+    useEffect(()=>{
+        fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
+        .then(res => res.json())
+        .then(res => {
+            if(res){
+                console.log(res)
+                setMovie(res)
+            }
+        })
+        .catch(err => console.error(err));
 
-            fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?language=en-US&page=1`, options)
-            .then(res => res.json())
-            .then(res => {
-                if(res){
-                    console.log('recs:', res)
-                    setMovieRecommendations(res.results)
-                }
-            })
-            .catch(err => console.error(err));
+        fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?language=en-US&page=1`, options)
+        .then(res => res.json())
+        .then(res => {
+            if(res){
+                console.log('recs:', res)
+                setMovieRecommendations(res.results)
+            }
+        })
+        .catch(err => console.error(err));
 
-            fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, options)
-            .then(res => res.json())
-            .then(res => {
-                if(res){
-                    console.log('videos:',res)
-                    const trailer = res.results?.find((vid) => vid.site === 'YouTube' && vid.type === 'Trailer')
-                    setTrailerKey(trailer?.key)
-                }
-            })
-            .catch(err => console.error(err));
-        }, [id])
-
-        
-
-
-
+        fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, options)
+        .then(res => res.json())
+        .then(res => {
+            if(res){
+                console.log('videos:',res)
+                const trailer = res.results?.find((vid) => vid.site === 'YouTube' && vid.type === 'Trailer')
+                setTrailerKey(trailer?.key)
+            }
+        })
+        .catch(err => console.error(err));
+    }, [id])
 
 
     if(movie){
@@ -144,7 +139,7 @@ const Moviepage = () => {
                                         <img src ={`https://image.tmdb.org/t/p/original/${rec.poster_path}`} alt="loading.." className='w-[300px] rounded-2xl object-cover'/>
                                         <div className='justify-items-center p-2'>
                                             <h3 className='text-sm font-semibold'>{rec.title}</h3>
-                                            <span className='text-xs text-gray-400'>{rec.release_date?.slice(0,4)}</span>
+                                            <h3 className='text-xs text-gray-400 text-center'>{rec.release_date?.slice(0,4)}</h3>
                                         </div>
                                     </Link>
                                 </div>

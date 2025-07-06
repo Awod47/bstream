@@ -1,10 +1,26 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/authStore.js'
+import toast, {Toaster} from 'react-hot-toast'
 
 const SignIn = () => {
 
+  const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const {signin, isLoading, error} = useAuthStore()
+
+
+  const handleSignIn = async(event)=>{
+    event.preventDefault()
+    try {
+      const {message} = await signin(username, password)
+      toast.success(message)
+      navigate('/')
+    } catch (error) {
+      console.log('error in handle signin jsx', error)
+    }
+  }
 
   console.log(username, password)
 
@@ -18,10 +34,11 @@ const SignIn = () => {
           <h1 className='text-3xl font-medium text-white mb-7'>Sign In</h1>
 
           
-          <form action="" className='flex flex-col space-y-4' >
+          <form  onSubmit={handleSignIn} action="" className='flex flex-col space-y-4 w-full' >
             <input value={username} onChange={(e)=>{setUsername(e.target.value)}} placeholder='username' className='bg-[#222222] text-white w-full h-[50px] rounded text-base px-5' type="text" />
             <input value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder='password' className='bg-[#222222] text-white w-full h-[50px] rounded text-base px-5' type="password" />
-            <button type='submit' className='text-white rounded-2xl mt-6 bg-green-700 hover:bg-green-600 h-[48px] cursor-pointer'>Sign In</button>
+            {error && <p className='text-red-500 text-center'>{error}</p>}
+            <button disabled={isLoading} type='submit' className='text-white rounded-2xl mt-6 bg-green-700 hover:bg-green-600 h-[48px] cursor-pointer'>Sign In</button>
           </form>
           <div className='p-3 justify-items-center w-full'>
             <Link to={'/signup'}>
